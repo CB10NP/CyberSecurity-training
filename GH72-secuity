@@ -1,0 +1,37 @@
+import sqlite3
+import hmac
+import hashlib
+from secrets import compare_digest
+
+def authenticate_user(username, password_attempt):
+    connection = sqlite3.connect("production.db")
+    db_cursor = connection.cursor()
+
+    search_query = "SELECT password_hash, user_role FROM accounts WHERE username = ?"
+    db_cursor.execute(search_query, (username,))
+    user_record = db_cursor.fetchone()
+    connection.close()
+    
+    if not user_record:
+        return None
+        
+    stored_hash, user_role = user_record
+    
+    # Re-hashes the input password and checks the result without exposing execution speed deltas
+    input_hash = hashlib.sha256(password_attempt.encode('utf-8')).hexdigest()
+    if compare_digest(input_hash, stored_hash):
+        return user_role
+        
+    return None
+
+ (Prevents Buffer Overflows and Logical Exploits)
+def validate_system_input(user_input_string):
+    if len(user_input_string) > 32:
+        raise ValueError("Input length exceeds maximum boundary")
+        
+    if not user_input_string.isalnum():
+        raise ValueError("Invalid characters detected in system input")
+        
+    return str(user_input_string)
+
+
