@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Theme - Neural Nexus</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@300;400;500;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background: #0a0a0f;
+            color: #e0e0e0;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+
+        /* Animated Background */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: 0;
+            animation: gridPulse 4s ease-in-out infinite;
+        }
+
+        @keyframes gridPulse {
+            0%, 100% { opacity: 0.3; }
+            50% { opacity: 0.7; }
+        }
+
+        /* Floating Particles */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ffff;
+            border-radius: 50%;
+            box-shadow: 0 0 6px #00ffff, 0 0 12px #00ffff;
+            animation: floatParticle linear infinite;
+            opacity: 0;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) scale(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-10vh) scale(1);
+                opacity: 0;
+            }
+        }
+
+        /* Glow Effect */
+        .glow-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 600px;
+            height: 600px;
+            transform: translate(-50%, -50%);
+            background: radial-gradient(circle, rgba(0, 255, 255, 0.08) 0%, transparent 70%);
+            z-index: 0;
+            animation: glowPulse 6s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes glowPulse {
+            0%, 100% { opacity: 0.3; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.7; transform: translate(-50%, -50%) scale(1.2); }
+        }
+
+        /* Main Container */
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Header */
+        header {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+
+        .ai-logo {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border: 2px solid #00ffff;
+            border-radius: 50%;
+            margin-bottom: 20px;
+            position: relative;
+            background: rgba(0, 255, 255, 0.05);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2), inset 0 0 30px rgba(0, 255, 255, 0.1);
+            animation: logoPulse 3s ease-in-out infinite;
+        }
+
+        .ai-logo svg {
+            width: 40px;
+            height: 40px;
+            fill: #00ffff;
+        }
+
+        @keyframes logoPulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.2), inset 0 0 30px rgba(0, 255, 255, 0.1); }
+            50% { box-shadow: 0 0 60px rgba(0, 255, 255, 0.4), inset 0 0 60px rgba(0, 255, 255, 0.2); }
+        }
+
+        header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffff, #0088ff, #00ffff);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientShift 4s ease-in-out infinite;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+        }
+
+        @keyframes gradientShift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: #888;
+            margin-top: 10px;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+        }
+
+        .header-line {
+            width: 100px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #00ffff, transparent);
+            margin: 20px auto 0;
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #00ffff;
+            margin-bottom: 30px;
+            text-align: center;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+        }
+
+        .section-title span {
+            color: #0088ff;
+        }
+
+        /* Card Grid */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            border-radius: 15px;
+            padding: 40px 30px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.05), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .card:hover::before {
+            left: 100%;
+        }
+
+        .card:hover {
+            border-color: #00ffff;
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 255, 255, 0.15);
+        }
+
+        .card-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            color: #fff;
+            margin-bottom: 15px;
+            letter-spacing: 2px;
+        }
+
+        .card p {
+            color: #aaa;
+            line-height: 1.6;
+            font-size: 0.95rem;
+        }
+
+        .card .card-number {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            font-weight: 900;
+            color: rgba(0, 255, 255, 0.06);
+        }
+
+        /* Stats Section */
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            margin-bottom: 80px;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 30px 20px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.1);
+            border-radius: 12px;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .stat-box:hover {
+            border-color: #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .stat-number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #00ffff, #0088ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: block;
+        }
+
+        .stat-label {
+            color: #888;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-top: 8px;
+            display: block;
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+            margin-bottom: 80px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            margin-bottom: 15px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+
+        .feature-item:hover {
+            border-color: rgba(0, 255, 255, 0.3);
+            background: rgba(0, 255, 255, 0.05);
+            transform: translateX(10px);
+        }
+
+        .feature-dot {
+            width: 10px;
+            height: 10px;
+            background: #00ffff;
+            border-radius: 50%;
+            margin-right: 20px;
+            box-shadow: 0 0 10px #00ffff;
+            flex-shrink: 0;
+        }
+
+        .feature-item span {
+            color: #ccc;
+            font-size: 1.05rem;
+        }
+
+        /* Terminal */
+        .terminal {
+            background: rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 12px;
+            overflow: hidden;
+            margin-bottom: 80px;
+            backdrop-filter: blur(10px);
+        }
+
+        .terminal-header {
+            display: flex;
+            align-items: center;
+            padding: 12px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .terminal-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .terminal-dot.red { background: #ff5f56; }
+        .terminal-dot.yellow { background: #ffbd2e; }
+        .terminal-dot.green { background: #27c93f; }
+
+        .terminal-title {
+            margin-left: 15px;
+            font-size: 0.85rem;
+            color: #888;
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal-body {
+            padding: 25px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #0f0;
+        }
+
+        .terminal-line {
+            opacity: 0;
+            animation: typeLine 0.5s ease forwards;
+        }
+
+        .terminal-line:nth-child(1) { animation-delay: 0.1s; }
+        .terminal-line:nth-child(2) { animation-delay: 0.6s; }
+        .terminal-line:nth-child(3) { animation-delay: 1.1s; }
+        .terminal-line:nth-child(4) { animation-delay: 1.6s; }
+        .terminal-line:nth-child(5) { animation-delay: 2.1s; }
+        .terminal-line:nth-child(6) { animation-delay: 2.6s; }
+        .terminal-line:nth-child(7) { animation-delay: 3.1s; }
+        .terminal-line:nth-child(8) { animation-delay: 3.6s; }
+
+        .terminal-prompt {
+            color: #00ffff;
+        }
+
+        .terminal-command {
+            color: #fff;
+        }
+
+        .terminal-output {
+            color: #0f0;
+        }
+
+        .terminal-cursor {
+            display: inline-block;
+            width: 8px;
+            height: 16px;
+            background: #0f0;
+            animation: blink 1s step-end infinite;
+            vertical-align: middle;
+            margin-left: 4px;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+
+        @keyframes typeLine {
+            to { opacity: 1; }
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        footer p {
+            color: #666;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+        }
+
+        footer .ai-signature {
+            font-family: 'Orbitron', sans-serif;
+            color: rgba(0, 255, 255, 0.3);
+            font-size: 0.8rem;
+            margin-top: 10px;
+            letter-spacing: 4px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2rem;
+            }
+            header p {
+                font-size: 0.9rem;
+                letter-spacing: 3px;
+            }
+            .container {
+                padding: 30px 15px;
+            }
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-container {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .section-title {
+                font-size: 1.3rem;
+            }
+            .terminal-body {
+                font-size: 0.75rem;
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .stats-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Background -->
+    <div class="bg-grid"></div>
+    <div class="glow-overlay"></div>
+    
+    <!-- Particles -->
+    <div class="particles" id="particles"></div>
+
+    <!-- Main Content -->
+    <div class="container">
+        
+        <!-- Header -->
+        <header>
+            <div class="ai-logo">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm-1-13h2v6h-2zm0 8h2v2h-2z"/>
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6-2.69-6-6-6zm0 10c-2.21 0-4-1.79-4-4s1.79-4 4-4 4 1.79 4 4-1.79 4-4 4z" opacity="0.4"/>
+                </svg>
+            </div>
+            <h1>Neural Nexus</h1>
+            <p>Artificial Intelligence Core</p>
+            <div class="header-line"></div>
+        </header>
+
+        <!-- Cards Section -->
+        <div class="section-title">Core <span>Capabilities</span></div>
+        <div class="card-grid">
+            <div class="card">
+                <span class="card-number">01</span>
+                <span class="card-icon">🧠</span>
+                <h3>Deep Learning</h3>
+                <p>Advanced neural networks that learn from complex data patterns with unprecedented accuracy and depth.</p>
+            </div>
+            <div class="card">
+                <span class="card-number">02</span>
+                <span class="card-icon">🌐</span>
+                <h3>Natural Language</h3>
+                <p>State-of-the-art NLP models capable of understanding, generating, and translating human language.</p>
+            </div>
+            <div class="card">
+                <span class="card-number">03</span>
+                <span class="card-icon">👁️</span>
+                <h3>Computer Vision</h3>
+                <p>Real-time image and video analysis for object detection, facial recognition, and scene understanding.</p>
+            </div>
+            <div class="card">
+                <span class="card-number">04</span>
+                <span class="card-icon">⚡</span>
+                <h3>Reinforcement Learning</h3>
+                <p>Autonomous decision-making systems that optimize strategies through continuous interaction.</p>
+            </div>
+            <div class="card">
+                <span class="card-number">05</span>
+                <span class="card-icon">🔮</span>
+                <h3>Predictive Analytics</h3>
+                <p>Data-driven forecasting models that anticipate trends, behaviors, and outcomes with precision.</p>
+            </div>
+            <div class="card">
+                <span class="card-number">06</span>
+                <span class="card-icon">🤖</span>
+                <h3>Autonomous Systems</h3>
+                <p>Self-governing AI agents that operate independently to complete complex tasks and workflows.</p>
+            </div>
+        </div>
+
+        <!-- Stats Section -->
+        <div class="section-title">Performance <span>Metrics</span></div>
+        <div class="stats-container">
+            <div class="stat-box">
+                <span class="stat-number">99.7%</span>
+                <span class="stat-label">Accuracy Rate</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">2.5B</span>
+                <span class="stat-label">Parameters</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">15ms</span>
+                <span class="stat-label">Response Time</span>
+            </div>
+            <div class="stat-box">
+                <span class="stat-number">10M+</span>
+                <span class="stat-label">Training Data</span>
+            </div>
+        </div>
+
+        <!-- Features -->
+        <div class="section-title">System <span>Features</span></div>
+        <ul class="feature-list">
+            <li class="feature-item">
+                <span class="feature-dot"></span>
+                <span>Multi-modal learning across text, images, audio, and video</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-dot"></span>
+                <span>Real-time inference with sub-20ms latency</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-dot"></span>
+                <span>End-to-end encryption and privacy-first architecture</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-dot"></span>
+                <span>Continuous self-improvement through active learning loops</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-dot"></span>
+                <span>Seamless API integration with major cloud platforms</span>
+            </li>
+            <li class="feature-item">
+                <span class="feature-dot"></span>
+                <span>Explainable AI (XAI) for transparent decision-making</span>
+            </li>
+        </ul>
+
+        <!-- Terminal -->
+        <div class="section-title">Neural <span>Console</span></div>
+        <div class="terminal">
+            <div class="terminal-header">
+                <div class="terminal-dot red"></div>
+                <div class="terminal-dot yellow"></div>
+                <div class="terminal-dot green"></div>
+                <span class="terminal-title">neural@nexus:~</span>
+            </div>
+            <div class="terminal-body">
+                <div class="terminal-line">
+                    <span class="terminal-prompt">neural@nexus:~$</span>
+                    <span class="terminal-command"> initialize --core --model gpt-7x</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">✓ Core initialized successfully</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">neural@nexus:~$</span>
+                    <span class="terminal-command"> train --dataset multimodal --epochs 1000</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">▶ Training started... ETA: 2h 34m</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">neural@nexus:~$</span>
+                    <span class="terminal-command"> status --verbose</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">├─ Model: NeuralNexus-v4.2</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">├─ Accuracy: 99.72%</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-output">└─ Uptime: 127d 14h 32m</span>
+                </div>
+                <div class="terminal-line">
+                    <span class="terminal-prompt">neural@nexus:~$</span>
+                    <span class="terminal-output">_<span class="terminal-cursor"></span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <footer>
+            <p>© 2026 Neural Nexus — Artificial Intelligence Core</p>
+            <p class="ai-signature">// Powered by Advanced Machine Intelligence //</p>
+        </footer>
+
+    </div>
+
+    <script>
+        // Particles Generator
+        function createParticles() {
+            const container = document.getElementById('particles');
+            const particleCount = 50;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                
+                const size = Math.random() * 4 + 2;
+                const duration = Math.random() * 15 + 10;
+                const delay = Math.random() * 15;
+                const left = Math.random() * 100;
+                const colors = ['#00ffff', '#0088ff', '#00ff88', '#ff00ff'];
+                const color = colors[Math.floor(Math.random() * colors.length)];
+
+                particle.style.cssText = `
+                    width: ${size}px;
+                    height: ${size}px;
+                    left: ${left}%;
+                    animation-duration: ${duration}s;
+                    animation-delay: ${delay}s;
+                    background: ${color};
+                    box-shadow: 0 0 ${size * 2}px ${color}, 0 0 ${size * 4}px ${color};
+                `;
+
+                container.appendChild(particle);
+            }
+        }
+
+        createParticles();
+
+        // Intersection Observer for Cards
+        const cards = document.querySelectorAll('.card');
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        cards.forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(card);
+        });
+
+        // Intersection Observer for Stats
+        const stats = document.querySelectorAll('.stat-box');
+        stats.forEach(stat => {
+            stat.style.opacity = '0';
+            stat.style.transform = 'translateY(20px)';
+            stat.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+            observer.observe(stat);
+        });
+
+        // Intersection Observer for Features
+        const features = document.querySelectorAll('.feature-item');
+        features.forEach((item, index) => {
+            item.style.opacity = '0';
+            item.style.transform = 'translateX(-20px)';
+            item.style.transition = `opacity 0.5s ease ${index * 0.1}s, transform 0.5s ease ${index * 0.1}s`;
+            observer.observe(item);
+        });
+
+        // Intersection Observer for Terminal
+        const terminal = document.querySelector('.terminal');
+        terminal.style.opacity = '0';
+        terminal.style.transition = 'opacity 0.8s ease';
+        observer.observe(terminal);
+    </script>
+
+</body>
+</html>
