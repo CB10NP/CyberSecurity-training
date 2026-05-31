@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acme Corp · GitHub</title>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background-color: #0d1117;
+            color: #c9d1d9;
+            line-height: 1.6;
+        }
+
+        /* ----- Header / Nav Bar ----- */
+        .top-nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 24px;
+            background-color: #161b22;
+            border-bottom: 1px solid #30363d;
+        }
+
+        .top-nav .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 20px;
+            font-weight: 700;
+            color: #f0f6fc;
+        }
+
+        .top-nav .logo i {
+            font-size: 28px;
+            color: #58a6ff;
+        }
+
+        .nav-links a {
+            color: #8b949e;
+            margin-left: 24px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: #58a6ff;
+        }
+
+        /* ----- Organization Header ----- */
+        .org-header {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 40px 24px 24px;
+            display: flex;
+            align-items: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .org-avatar {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #238636, #58a6ff);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: #fff;
+            flex-shrink: 0;
+            border: 3px solid #30363d;
+        }
+
+        .org-info h1 {
+            font-size: 28px;
+            font-weight: 700;
+            color: #f0f6fc;
+        }
+
+        .org-info .tagline {
+            font-size: 16px;
+            color: #8b949e;
+            margin-top: 4px;
+        }
+
+        .org-info .meta {
+            margin-top: 10px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            font-size: 14px;
+            color: #8b949e;
+        }
+
+        .org-info .meta i {
+            margin-right: 6px;
+            color: #58a6ff;
+        }
+
+        .org-info .meta span {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        /* ----- Tab Bar ----- */
+        .tab-bar {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            border-bottom: 1px solid #30363d;
+            display: flex;
+            gap: 0;
+            overflow-x: auto;
+        }
+
+        .tab-bar a {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 12px 16px;
+            color: #8b949e;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            border-bottom: 2px solid transparent;
+            transition: 0.2s;
+            white-space: nowrap;
+        }
+
+        .tab-bar a.active {
+            color: #f0f6fc;
+            border-bottom-color: #f78166;
+        }
+
+        .tab-bar a:hover:not(.active) {
+            color: #c9d1d9;
+            border-bottom-color: #30363d;
+        }
+
+        /* ----- Main Content ----- */
+        .main-content {
+            max-width: 1280px;
+            margin: 24px auto;
+            padding: 0 24px;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: 24px;
+        }
+
+        /* -- Repositories Section -- */
+        .repos-section h2 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #f0f6fc;
+        }
+
+        .repo-card {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .repo-card:hover {
+            border-color: #58a6ff;
+        }
+
+        .repo-card .repo-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .repo-card .repo-name:hover {
+            text-decoration: underline;
+        }
+
+        .repo-card .repo-desc {
+            font-size: 14px;
+            color: #8b949e;
+            margin: 6px 0 12px;
+        }
+
+        .repo-card .repo-meta {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 16px;
+            font-size: 12px;
+            color: #8b949e;
+        }
+
+        .repo-card .repo-meta .lang-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 4px;
+        }
+
+        .lang-js { background: #f1e05a; }
+        .lang-py { background: #3572A5; }
+        .lang-go { background: #00ADD8; }
+        .lang-ts { background: #3178c6; }
+        .lang-rust{ background: #dea584; }
+
+        .repo-card .repo-meta i {
+            margin-right: 4px;
+        }
+
+        /* -- Sidebar -- */
+        .sidebar-section {
+            background: #161b22;
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .sidebar-section h3 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #8b949e;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        .sidebar-section p,
+        .sidebar-section li {
+            font-size: 14px;
+            color: #c9d1d9;
+        }
+
+        .sidebar-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sidebar-section ul li {
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .sidebar-section ul li i {
+            width: 16px;
+            color: #58a6ff;
+        }
+
+        .sidebar-section a {
+            color: #58a6ff;
+            text-decoration: none;
+        }
+
+        .sidebar-section a:hover {
+            text-decoration: underline;
+        }
+
+        /* ----- Footer ----- */
+        .footer {
+            max-width: 1280px;
+            margin: 40px auto 20px;
+            padding: 0 24px;
+            text-align: center;
+            font-size: 12px;
+            color: #484f58;
+            border-top: 1px solid #21262d;
+            padding-top: 20px;
+        }
+
+        .footer a {
+            color: #8b949e;
+            text-decoration: none;
+            margin: 0 8px;
+        }
+
+        .footer a:hover {
+            color: #58a6ff;
+        }
+
+        /* ----- Responsive ----- */
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            .org-header {
+                flex-direction: column;
+                align-items: flex-start;
+                text-align: left;
+            }
+            .top-nav {
+                flex-wrap: wrap;
+                gap: 12px;
+            }
+            .nav-links a {
+                margin-left: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ===== Navigation ===== -->
+    <nav class="top-nav">
+        <div class="logo">
+            <i class="fab fa-github"></i>
+            <span>Acme Corp</span>
+        </div>
+        <div class="nav-links">
+            <a href="#">Dashboard</a>
+            <a href="#">Repositories</a>
+            <a href="#">Organizations</a>
+            <a href="#">Settings</a>
+        </div>
+    </nav>
+
+    <!-- ===== Organization Header ===== -->
+    <header class="org-header">
+        <div class="org-avatar">
+            <i class="fas fa-building"></i>
+        </div>
+        <div class="org-info">
+            <h1>Acme Corporation</h1>
+            <p class="tagline">Building the future of cloud-native infrastructure.</p>
+            <div class="meta">
+                <span><i class="fas fa-map-marker-alt"></i> San Francisco, CA</span>
+                <span><i class="fas fa-link"></i> https://acme.example.com</span>
+                <span><i class="fas fa-users"></i> 24 members</span>
+                <span><i class="fas fa-calendar-alt"></i> Founded 2019</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- ===== Tab Bar ===== -->
+    <div class="tab-bar">
+        <a href="#" class="active"><i class="fas fa-book"></i> Repositories</a>
+        <a href="#"><i class="fas fa-users"></i> People</a>
+        <a href="#"><i class="fas fa-project-diagram"></i> Projects</a>
+        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+    </div>
+
+    <!-- ===== Main Content ===== -->
+    <div class="main-content">
+
+        <!-- Repositories -->
+        <section class="repos-section">
+            <h2>Popular repositories</h2>
+
+            <!-- Repo 1 -->
+            <div class="repo-card">
+                <a href="#" class="repo-name">acme-core</a>
+                <p class="repo-desc">Core microservices framework — gRPC, service mesh, observability.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot lang-go"></span> Go</span>
+                    <span><i class="fas fa-star"></i> 1.8k</span>
+                    <span><i class="fas fa-code-branch"></i> 342</span>
+                    <span>Updated 2 days ago</span>
+                </div>
+            </div>
+
+            <!-- Repo 2 -->
+            <div class="repo-card">
+                <a href="#" class="repo-name">acme-frontend</a>
+                <p class="repo-desc">Next-gen dashboard built with React, TypeScript &amp; Tailwind.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot lang-ts"></span> TypeScript</span>
+                    <span><i class="fas fa-star"></i> 2.4k</span>
+                    <span><i class="fas fa-code-branch"></i> 521</span>
+                    <span>Updated 5 days ago</span>
+                </div>
+            </div>
+
+            <!-- Repo 3 -->
+            <div class="repo-card">
+                <a href="#" class="repo-name">acme-api</a>
+                <p class="repo-desc">REST &amp; GraphQL API gateway — rate limiting, auth, caching.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot lang-py"></span> Python</span>
+                    <span><i class="fas fa-star"></i> 980</span>
+                    <span><i class="fas fa-code-branch"></i> 213</span>
+                    <span>Updated 1 week ago</span>
+                </div>
+            </div>
+
+            <!-- Repo 4 -->
+            <div class="repo-card">
+                <a href="#" class="repo-name">acme-infra</a>
+                <p class="repo-desc">Infrastructure-as-code — Terraform modules for AWS, GCP, Azure.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot lang-js"></span> HCL</span>
+                    <span><i class="fas fa-star"></i> 670</span>
+                    <span><i class="fas fa-code-branch"></i> 144</span>
+                    <span>Updated 2 weeks ago</span>
+                </div>
+            </div>
+
+            <!-- Repo 5 -->
+            <div class="repo-card">
+                <a href="#" class="repo-name">acme-cli</a>
+                <p class="repo-desc">CLI tool for managing Acme resources from the terminal.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot lang-rust"></span> Rust</span>
+                    <span><i class="fas fa-star"></i> 1.2k</span>
+                    <span><i class="fas fa-code-branch"></i> 97</span>
+                    <span>Updated 3 weeks ago</span>
+                </div>
+            </div>
+
+            <!-- Repo 6 -->
+            <div class="repo-card">
+                <a href="#" class="repo-name">acme-docs</a>
+                <p class="repo-desc">Documentation site powered by Docusaurus &amp; MDX.</p>
+                <div class="repo-meta">
+                    <span><span class="lang-dot lang-js"></span> JavaScript</span>
+                    <span><i class="fas fa-star"></i> 340</span>
+                    <span><i class="fas fa-code-branch"></i> 88</span>
+                    <span>Updated 1 month ago</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sidebar -->
+        <aside>
+            <!-- About -->
+            <div class="sidebar-section">
+                <h3>About</h3>
+                <p>Acme Corporation is a technology company focused on building scalable, secure, and open-source cloud infrastructure tools.</p>
+                <br />
+                <p><i class="fas fa-envelope" style="margin-right:6px; color:#58a6ff;"></i> <a href="#">opensource@acme.example.com</a></p>
+            </div>
+
+            <!-- Top Languages -->
+            <div class="sidebar-section">
+                <h3>Top Languages</h3>
+                <ul>
+                    <li><i class="fas fa-circle" style="color:#f1e05a; font-size:10px;"></i> JavaScript (32%)</li>
+                    <li><i class="fas fa-circle" style="color:#3178c6; font-size:10px;"></i> TypeScript (28%)</li>
+                    <li><i class="fas fa-circle" style="color:#3572A5; font-size:10px;"></i> Python (18%)</li>
+                    <li><i class="fas fa-circle" style="color:#00ADD8; font-size:10px;"></i> Go (14%)</li>
+                    <li><i class="fas fa-circle" style="color:#dea584; font-size:10px;"></i> Rust (8%)</li>
+                </ul>
+            </div>
+
+            <!-- Latest Activity -->
+            <div class="sidebar-section">
+                <h3>Latest Activity</h3>
+                <ul>
+                    <li><i class="fas fa-code-branch"></i> <a href="#">acme-frontend</a> — PR #342 merged</li>
+                    <li><i class="fas fa-star"></i> <a href="#">acme-core</a> — starred by 12 users</li>
+                    <li><i class="fas fa-exclamation-circle"></i> <a href="#">acme-infra</a> — 3 issues opened</li>
+                    <li><i class="fas fa-tag"></i> <a href="#">acme-cli</a> — v2.1.0 released</li>
+                </ul>
+            </div>
+
+            <!-- Contributors -->
+            <div class="sidebar-section">
+                <h3>Top Contributors</h3>
+                <ul>
+                    <li><i class="fas fa-user"></i> <a href="#">alice-dev</a> — 847 commits</li>
+                    <li><i class="fas fa-user"></i> <a href="#">bob-codes</a> — 632 commits</li>
+                    <li><i class="fas fa-user"></i> <a href="#">carol-dev</a> — 501 commits</li>
+                    <li><i class="fas fa-user"></i> <a href="#">dave-patch</a> — 320 commits</li>
+                </ul>
+            </div>
+        </aside>
+    </div>
+
+    <!-- ===== Footer ===== -->
+    <footer class="footer">
+        &copy; 2026 Acme Corporation &mdash;
+        <a href="#">Terms</a> ·
+        <a href="#">Privacy</a> ·
+        <a href="#">Security</a> ·
+        <a href="#">Status</a> ·
+        <a href="#">Docs</a>
+        <br /><br />
+        <i class="fab fa-github"></i> Built with ❤️ for the open source community.
+    </footer>
+
+</body>
+</html>
